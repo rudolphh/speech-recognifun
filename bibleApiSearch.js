@@ -1,20 +1,19 @@
 
 
 const resultsList = document.querySelector(`#results-list`);
+const searchInputLabel = document.querySelector(`#search-input-label`);
 const searchInput = document.querySelector(`#search-input`);
 const searchNavTop = document.querySelector(`#search-nav-top`);
 const searchNavBottom = document.querySelector(`#search-nav-bottom`);
 const bibleVersionID = `179568874c45066f-01`;
 const abbreviation = "engDRA";
-const query = getParameterByName(`query`);
+const abbreviationLocal = "DRA";
 
-if (query) {
-  document.querySelector(`#viewing`).innerHTML = query;
-  search(query);
-}
+const bibleGatewayBaseUrl = 'https://www.biblegateway.com/passage/?search=';
+
 
 function search(searchText, offset = 0) {
-    console.log("search text: " + searchText);
+  searchInputLabel.style.display = 'block';
   searchInput.innerHTML = searchText;
   getResults(searchText, offset).then((data) => {
     let resultsHTML = ``;
@@ -35,11 +34,12 @@ function search(searchText, offset = 0) {
 
         resultsHTML += `<ul>`;
         for (let verse of data.verses) {
+            console.log(verse.chapterId);
           resultsHTML += `<li>
             <h5>${verse.reference}</h5>
             <div class="text not-eb-container">${verse.text}</div>
-            <a href="verse.html?version=${bibleVersionID}&abbr=${abbreviation}&chapter=${verse.chapterId}">view chapter</a>
-          </li>`;
+            <a href="${bibleGatewayBaseUrl}${verse.chapterId}&version=${abbreviationLocal}" target="_blank">view chapter</a>
+            </li>`;
         }
         resultsHTML += `<ul>`;
       }
