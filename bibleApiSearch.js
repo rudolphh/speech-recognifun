@@ -1,25 +1,11 @@
 
-function getParameterByName(name) {
-    const url = window.location.href;
-    name = name.replace(/[\[\]]/g, `\\$&`);
-    const regex = new RegExp(`[?&]` + name + `(=([^&#]*)|&|#|$)`),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return ``;
-    return decodeURIComponent(results[2].replace(/\+/g, ` `));
-}
-
-function searchButton() {
-    const searchInput = document.querySelector(`#search-input`);
-    window.location.href = `./search.html?&version=${bibleVersionID}&abbr=${abbreviation}&query=${searchInput.value}`;
-}
 
 const resultsList = document.querySelector(`#results-list`);
 const searchInput = document.querySelector(`#search-input`);
 const searchNavTop = document.querySelector(`#search-nav-top`);
 const searchNavBottom = document.querySelector(`#search-nav-bottom`);
-const bibleVersionID = getParameterByName(`version`) || `06125adad2d5898a-01`;
-const abbreviation = getParameterByName(`abbr`) || "ASV";
+const bibleVersionID = `179568874c45066f-01`;
+const abbreviation = "engDRA";
 const query = getParameterByName(`query`);
 
 if (query) {
