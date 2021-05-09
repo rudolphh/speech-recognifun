@@ -13,8 +13,6 @@ const bibleGatewayBaseUrl = 'https://www.biblegateway.com/passage/?search=';
 
 
 function search(searchText, offset = 0) {
-  searchInputLabel.style.display = 'block';
-  searchInput.innerHTML = searchText;
   getResults(searchText, offset).then((data) => {
     let resultsHTML = ``;
 

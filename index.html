@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="http://demo.api.bible/css/scripture.css">
 
   <style>
+    #search-input-label {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
     #search-nav-bottom {
       display: flex;
       flex-direction: column;
@@ -15,13 +20,46 @@
     .results-nav {
       padding: 20px;
     }
+    .words {
+      border: 1px solid lightgray;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .words p {
+      font-size: 30px;
+      border-bottom: 1px solid slategray;
+    }
+
+    #logo-container {
+      text-align: center;
+    }
+
+    .vcin-logo {
+      text-align: center;
+      transition: max-height 1s ease-out;
+      max-height: 600px;
+    }
+
+    .disappear {
+      max-height: 0px;
+    }
+
+
   </style>  
   </head>
   <body>
+    <audio id="myAudio">
+      <source src="./sound/t1_be_back.wav" 
+        type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
+    
     <div class="container">
-      <div class="words p-5"></div>
-      <h2 id="search-input-label" style="display: none;">Search results for:</h2>
-      <div id="search-input"></div>
+      <div class="words m-5">
+      </div>
+      <div id="logo-container"><img class="vcin-logo" src="./img/vcinator.png" alt=""></div>
+      <h4 id="search-input-label" style="display: none;">Search results for:</h4>
+      <span id="search-input"></span>
       <h3 id="viewing"></h3>
 
       <div id="search-nav-top" class="search-nav search-nav-top"></div>
@@ -37,8 +75,12 @@
       recognition.interimResults = true;
 
       let p = document.createElement("p");
+      let small = document.createElement('small');
+      p.textContent = "Voiceinator"
+      small.textContent = 'Say a simple color, tell "Rudy" what to Google, or search the "Bible"'
       const words = document.querySelector(".words");
       words.appendChild(p);
+      words.appendChild(small);
 
       recognition.addEventListener("result", (e) => {
         //console.log(e.results);
@@ -56,8 +98,9 @@
           let spokenColors = transcript.split(' ').filter((word) => CSS_COLOR_NAMES.includes(word.charAt(0).toUpperCase() + word.slice(1)));
           document.body.style.backgroundColor = spokenColors[spokenColors.length-1];
 
+          // "rudy"
           if(transcript.includes("Rudy")){ 
-            var baseUrl = 'https://www.google.com/search?q=';
+            let baseUrl = 'https://www.google.com/search?q=';
             let searchIndex = transcript.lastIndexOf("Rudy") + 5;// ignore name plus a space
             //console.log(searchIndex)
             let query = transcript.substring(searchIndex);
@@ -66,16 +109,48 @@
             // encode only the query string
             let completeUrl = baseUrl + encodeURIComponent(query)
             console.log(completeUrl)
-            window.open(completeUrl, "tab");
+            window.open(completeUrl);
           }
 
+          // "bible"
           if(transcript.includes("Bible")) {
-            let searchIndex = transcript.lastIndexOf("Bible") + 6;// ignore name plus a space
-            //console.log(searchIndex)
-            let query = transcript.substring(searchIndex);
-            //console.log("field: " + searchField);
 
-            search(query);
+            let searchIndex = transcript.lastIndexOf("Bible") + 6;// ignore name plus a space
+            let query = transcript.substring(searchIndex);
+
+            const beBack = document.getElementById("myAudio");
+            const vcinLogo = document.querySelector('.vcin-logo');
+
+            if(!vcinLogo.classList.contains('disappear')) {
+              beBack.play();
+              vcinLogo.classList.add('disappear');
+              searchInputLabel.style.display = 'inline-block';
+            }
+
+            searchInput.innerHTML = query;
+            search(encodeURIComponent(query));
+          }
+
+          // jobs
+          let phrase = "search jobs for"
+          if(transcript.toLowerCase().includes(phrase)) {
+            let baseUrl = "https://www.indeed.com/jobs?q="
+            let searchIndex = transcript.lastIndexOf(phrase) + phrase.length+1;
+            let query = transcript.substring(searchIndex);
+
+            let inWordIndex = query.toLowerCase().lastIndexOf('in');
+
+            let completeUrl = baseUrl;
+            if(inWordIndex === -1) { // only jobTitle was spoken
+              completeUrl += encodeURIComponent(query) + '&l=';
+            } else {
+              let jobTitle = encodeURIComponent(query.substring(0, inWordIndex));
+              let location = encodeURIComponent(query.substring(inWordIndex + 3));
+              completeUrl += `${baseUrl}${jobTitle}&${location}`;
+            }
+
+            console.log(completeUrl);
+            window.open(completeUrl);
           }
         }
 
