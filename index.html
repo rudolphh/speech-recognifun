@@ -138,7 +138,7 @@
             let searchIndex = transcript.lastIndexOf(phrase) + phrase.length+1;
             let query = transcript.substring(searchIndex);
 
-            let inWordIndex = query.toLowerCase().lastIndexOf('in');
+            let inWordIndex = query.toLowerCase().search(/\bin\b/);
 
             let completeUrl = baseUrl;
             if(inWordIndex === -1) { // only jobTitle was spoken
@@ -146,12 +146,26 @@
             } else {
               let jobTitle = encodeURIComponent(query.substring(0, inWordIndex));
               let location = encodeURIComponent(query.substring(inWordIndex + 3));
-              completeUrl += `${baseUrl}${jobTitle}&${location}`;
+              completeUrl += `${jobTitle}&l=${location}`;
             }
 
             console.log(completeUrl);
             window.open(completeUrl);
           }
+
+          //youtube
+          phrase = 'YouTube'
+          if(transcript.includes(phrase)){ 
+            let baseUrl = 'https://www.youtube.com/results?search_query=';
+            let searchIndex = transcript.lastIndexOf(phrase) + phrase.length+1;
+            let query = transcript.substring(searchIndex);
+
+            // encode only the query string
+            let completeUrl = baseUrl + encodeURIComponent(query)
+            console.log(completeUrl)
+            window.open(completeUrl);
+          }
+
         }
 
         console.log(transcript);
