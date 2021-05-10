@@ -3,8 +3,8 @@
   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-  <link rel="stylesheet" href="http://demo.api.bible/css/main.css">
-  <link rel="stylesheet" href="http://demo.api.bible/css/scripture.css">
+  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="stylesheet" href="./assets/css/scripture.css">
 
   <style>
     #search-input-label {
@@ -49,7 +49,7 @@
   </head>
   <body>
     <audio id="myAudio">
-      <source src="./sound/t1_be_back.wav" 
+      <source src="./assets/sound/t1_be_back.wav" 
         type="audio/wav">
       Your browser does not support the audio element.
     </audio>
@@ -57,7 +57,7 @@
     <div class="container">
       <div class="words m-5">
       </div>
-      <div id="logo-container"><img class="vcin-logo" src="./img/vcinator.png" alt=""></div>
+      <div id="logo-container"><img class="vcin-logo" src="./assets/img/vcinator.png" alt=""></div>
       <h4 id="search-input-label" style="display: none;">Search results for:</h4>
       <span id="search-input"></span>
       <h3 id="viewing"></h3>
@@ -68,7 +68,7 @@
     </div>
 
     <script src="./colors.js"></script>
-    <script src="http://cdn.scripture.api.bible/fums/fumsv2.min.js"></script>
+    <script src="./assets/js/fumsv2.min.js"></script>
     <script src="./bibleApiSearch.js"></script>
     <script>
       const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
