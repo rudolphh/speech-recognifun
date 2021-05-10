@@ -77,7 +77,15 @@
       let p = document.createElement("p");
       let small = document.createElement('small');
       p.textContent = "Voiceinator"
-      small.textContent = 'Say a simple color, tell "Rudy" what to Google, or search the "Bible"'
+      small.innerHTML = 'Say a simple <strong>color</strong>, tell <strong>Rudy</strong> what to Google, or <strong>hey Bible</strong> to search scripture'
+      small.innerHTML += `
+      <small><div style="margin: 5px; font-weight: normal;">can also use: </div>
+          <ul>
+            <li><strong>hey YouTube </strong>&lt;search query&gt;</li>
+            <li><strong>hey indeed </strong>&lt;'job title' in 'location'&gt;</li>
+          </ul>
+        </small>`;
+
       const words = document.querySelector(".words");
       words.appendChild(p);
       words.appendChild(small);
@@ -113,7 +121,7 @@
           }
 
           // "bible"
-          if(transcript.includes("Bible")) {
+          if(transcript.includes("hey Bible")) {
 
             let searchIndex = transcript.lastIndexOf("Bible") + 6;// ignore name plus a space
             let query = transcript.substring(searchIndex);
@@ -132,29 +140,20 @@
           }
 
           // jobs
-          let phrase = "search jobs for"
+          let phrase = "hey indeed"
           if(transcript.toLowerCase().includes(phrase)) {
             let baseUrl = "https://www.indeed.com/jobs?q="
             let searchIndex = transcript.lastIndexOf(phrase) + phrase.length+1;
             let query = transcript.substring(searchIndex);
 
-            let inWordIndex = query.toLowerCase().search(/\bin\b/);
-
-            let completeUrl = baseUrl;
-            if(inWordIndex === -1) { // only jobTitle was spoken
-              completeUrl += encodeURIComponent(query) + '&l=';
-            } else {
-              let jobTitle = encodeURIComponent(query.substring(0, inWordIndex));
-              let location = encodeURIComponent(query.substring(inWordIndex + 3));
-              completeUrl += `${jobTitle}&l=${location}`;
-            }
+            let completeUrl = baseUrl + encodeURIComponent(query);
 
             console.log(completeUrl);
             window.open(completeUrl);
           }
 
           //youtube
-          phrase = 'YouTube'
+          phrase = 'hey YouTube'
           if(transcript.includes(phrase)){ 
             let baseUrl = 'https://www.youtube.com/results?search_query=';
             let searchIndex = transcript.lastIndexOf(phrase) + phrase.length+1;

@@ -1,5 +1,3 @@
-
-
 const resultsList = document.querySelector(`#results-list`);
 const searchInputLabel = document.querySelector(`#search-input-label`);
 const searchInput = document.querySelector(`#search-input`);
