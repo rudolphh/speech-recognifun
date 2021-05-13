@@ -17,56 +17,66 @@
       Your browser does not support the audio element.
     </audio>
 
-    <div class="container">
-      <div class="words m-5"></div>
-      <div style="text-align: center" class="m-5">
-        <button
-          id="speak-btn"
-          class="btn btn-primary"
-          style="width: 50%; margin-bottom: 20px"
-        >
-          speak
-        </button>
-        <select name="voice" id="voices" class="form-select">
-          <option value="">Select A Voice</option>
-        </select>
-        <label for="rate" style="margin: 20px 0 0 0">Rate: </label>
-        <input
-          type="range"
-          class="form-range"
-          name="rate"
-          id="rate"
-          min="0"
-          max="3"
-          step="0.1"
-          value="1"
-        />
-        <label for="pitch" style="margin: 20px 0 0 0">Pitch: </label>
-        <input
-          type="range"
-          class="form-range"
-          name="pitch"
-          id="pitch"
-          min="0"
-          max="2"
-          step="0.1"
-        />
-      </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-10 offset-md-1">        
+          <div class="words m-5"></div>
+        </div>
+        <div class="col-md-8 offset-md-2">
 
-      <div id="logo-container">
-        <img
-          class="vcin-logo img-fluid"
-          src="https://images.pexels.com/photos/3851254/pexels-photo-3851254.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          alt=""
-        />
-      </div>
-      <h4 id="search-input-label" style="display: none">Search results for:</h4>
-      <span id="search-input"></span>
-      <h3 id="viewing"></h3>
+        <div style="text-align: center; margin: 0 20px 40px 20px;" >
+          <button
+            id="speak-btn"
+            class="btn btn-primary"
+            style="width: 50%; margin-bottom: 20px"
+          >
+            speak
+          </button>
 
-      <div id="search-nav-top" class="search-nav search-nav-top"></div>
-      <div id="results-list" class="search-results-list list-container"></div>
-      <div id="search-nav-bottom" class="search-nav search-nav-bottom"></div>
+            <select name="voice" id="voices" class="form-select">
+              <option value="">Select A Voice</option>
+            </select>
+            <label for="rate" style="margin: 20px 0 0 0">Rate: </label>
+            <input
+              type="range"
+              class="form-range"
+              name="rate"
+              id="rate"
+              min="0"
+              max="3"
+              step="0.1"
+              value="1"
+            />
+            <label for="pitch" style="margin: 20px 0 0 0">Pitch: </label>
+            <input
+              type="range"
+              class="form-range"
+              name="pitch"
+              id="pitch"
+              min="0"
+              max="2"
+              step="0.1"
+            />
+          </div>
+        </div>
+
+        <div id="logo-container">
+          <img
+            class="vcin-logo img-fluid"
+            src="https://images.pexels.com/photos/3851254/pexels-photo-3851254.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            alt=""
+          />
+        </div>
+        <h4 id="search-input-label" style="display: none">
+          Search results for:
+        </h4>
+        <span id="search-input"></span>
+        <h3 id="viewing"></h3>
+
+        <div id="search-nav-top" class="search-nav search-nav-top"></div>
+        <div id="results-list" class="search-results-list list-container"></div>
+        <div id="search-nav-bottom" class="search-nav search-nav-bottom"></div>
+      </div>
     </div>
 
     <script src="./assets/js/colors.js"></script>
