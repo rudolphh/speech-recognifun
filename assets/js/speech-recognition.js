@@ -1,17 +1,17 @@
-const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.interimResults = true;
-
 let p = document.createElement("p");
 let small = document.createElement('small');
-p.textContent = "Voiceinator"
+
+p.contentEditable = true;
+p.textContent = "Voiceinator";
+
 small.innerHTML = 'Say a simple <strong>color</strong>, tell <strong>Rudy</strong> what to Google, or <strong>hey Bible</strong> to search scripture'
 small.innerHTML += `
 <small><div style="margin: 5px; font-weight: normal;">can also use: </div>
-    <ul>
-      <li><strong>hey YouTube </strong>&lt;search query&gt;</li>
-      <li><strong>hey indeed </strong>&lt;'job title' in 'location'&gt;</li>
-    </ul>
-  </small>`;
+  <ul>
+    <li><strong>hey YouTube </strong>&lt;search query&gt;</li>
+    <li><strong>hey indeed </strong>&lt;'job title' in 'location'&gt;</li>
+  </ul>
+</small>`;
 
 const words = document.querySelector(".words");
 words.appendChild(p);
@@ -31,7 +31,8 @@ recognition.addEventListener("result", (e) => {
     //words.appendChild(p);
 
     msg.text = transcript;
-speechSynthesis.speak(msg);
+    recognition.stop();
+    window.speechSynthesis.speak(msg);
 
     let spokenColors = transcript.split(' ').filter((word) => CSS_COLOR_NAMES.includes(word.charAt(0).toUpperCase() + word.slice(1)));
     document.body.style.backgroundColor = spokenColors[spokenColors.length-1];
@@ -103,3 +104,23 @@ speechSynthesis.speak(msg);
 recognition.addEventListener("end", recognition.start);
 
 recognition.start();
+
+const debounce = (func, wait) => {
+  let timeout;
+
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
+document.querySelector('.words p').addEventListener('input', debounce(function () {
+  recognition.stop();
+  msg.text = document.querySelector('.words p').textContent;
+  speechSynthesis.speak(msg);
+}), 2000);

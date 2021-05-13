@@ -1,4 +1,6 @@
 const msg = new SpeechSynthesisUtterance();
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.interimResults = true;
 
 let voice = [];
 const voicesDropdown = document.querySelector('[name="voice"]');
@@ -16,6 +18,7 @@ function populateVoices() {
 
 function setVoice() {
     console.log('voice changed');
+    recognition.stop();
     msg.voice = voices.find(voice => voice.name === this.value);
     toggle();
 }
@@ -27,5 +30,6 @@ function toggle() {
 
 
 
-speechSynthesis.addEventListener('voiceschanged', populateVoices);
+window.speechSynthesis.addEventListener('voiceschanged', populateVoices);
+//window.speechSynthesis.addEventListener('end', recognition.start);
 voicesDropdown.addEventListener('change', setVoice);

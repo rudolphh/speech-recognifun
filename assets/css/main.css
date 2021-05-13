@@ -34,3 +34,7 @@
   .disappear {
     max-height: 0px;
   }
+
+  #voices {
+      margin-bottom: 10px;
+  }
