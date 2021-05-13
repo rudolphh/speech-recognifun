@@ -4,7 +4,7 @@ recognition.interimResults = true;
 
 let voice = [];
 const voicesDropdown = document.querySelector('[name="voice"]');
-const options = document.querySelector('[type="range"], [name="text"]');
+const options = document.querySelectorAll('[type="range"]');
 
 // msg.text = transcript or query somewhere
 
@@ -23,6 +23,18 @@ function setVoice() {
     toggle();
 }
 
+function toggle() {
+    speechSynthesis.cancel();
+    speechSynthesis.speak(msg);
+}
+
+function setOptions() {
+    console.log(this.name, this.value);
+    msg[this.name] = this.value;
+    toggle();
+}
+
+options.forEach(option => option.addEventListener('change', setOptions));
 function toggle() {
     speechSynthesis.cancel();
     speechSynthesis.speak(msg);
