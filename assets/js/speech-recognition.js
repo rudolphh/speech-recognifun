@@ -34,7 +34,7 @@ function resultHandler(e) {
     let spokenColors = transcript.split(' ').filter((word) => CSS_COLOR_NAMES.includes(word.charAt(0).toUpperCase() + word.slice(1)));
     document.body.style.backgroundColor = spokenColors[spokenColors.length-1];
 
-    // "rudy"
+    // "rudy" 
     if(transcript.includes("Rudy")){ 
       let baseUrl = 'https://www.google.com/search?q=';
       let searchIndex = transcript.lastIndexOf("Rudy") + 5;// ignore name plus a space
