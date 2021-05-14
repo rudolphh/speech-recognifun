@@ -29,6 +29,8 @@
     text-align: center;
     transition: max-height 1s ease-out;
     max-height: 600px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
   }
 
   .disappear {
