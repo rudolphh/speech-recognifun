@@ -1,3 +1,6 @@
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.interimResults = true;
+
 let p = document.createElement("p");
 let small = document.createElement('small');
 

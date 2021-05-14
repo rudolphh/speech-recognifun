@@ -1,6 +1,4 @@
 const msg = new SpeechSynthesisUtterance();
-const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.interimResults = true;
 
 let voice = [];
 const voicesDropdown = document.querySelector('[name="voice"]');
@@ -18,7 +16,6 @@ function populateVoices() {
 
 function setVoice() {
     console.log('voice changed');
-    recognition.stop();
     msg.voice = voices.find(voice => voice.name === this.value);
     toggle();
 }
