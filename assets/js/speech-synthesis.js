@@ -32,11 +32,6 @@ function setOptions() {
 }
 
 options.forEach(option => option.addEventListener('change', setOptions));
-function toggle() {
-    speechSynthesis.cancel();
-    speechSynthesis.speak(msg);
-}
-
 
 
 window.speechSynthesis.addEventListener('voiceschanged', populateVoices);
